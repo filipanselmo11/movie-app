@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <MovieAppBar />
-      <MovieInput />
+      <MovieInput :userInput="userInput" :loading="loading" :loaed="loaded" @searchMovie="searchMovie" />
       <br />
       <v-row>
         <v-col v-for="item in movies" :key="item.id" cols="12" sm="6" md="4">
@@ -25,7 +25,6 @@ import axios from 'axios';
 
 export default defineComponent({
   name: 'App',
-
   components: {
     MovieAppBar,
     MovieInput,
@@ -60,14 +59,37 @@ export default defineComponent({
         { id: 18, title: 'Mortal Kombat (2021)', image: 'https://images5.alphacoders.com/113/1131821.jpg' },
         { id: 19, title: 'O Incrivel Hulk', image: 'https://images8.alphacoders.com/509/509123.png' },
       ],
+      loading: false,
+      loaded: false,
+      userInput: '',
     }
   },
   methods: {
-    getMovies() {
+    searchMovie() {
+      console.log('Buscando Filme');
+      this.loading = true;
       this.movies.forEach(item => {
-        console.log(item)
+        if (this.userInput === item.title) {
+          this.loading = false;
+          this.loaded = true;
+          console.log('Filme Encontrado');
+        }
       })
+      // setTimeout(() => {
+      //   this.loading = false;
+      //   this.loaded = true;
+      //   this.movies.forEach(item => {
+      //     if (item.title === this.userInput) {
+      //       console.log('Filme Encontrado')
+      //     }
+      //   })
+      // }, 5000);
     }
+    // getMovies() {
+    //   this.movies.forEach(item => {
+    //     console.log(item)
+    //   })
+    // }
     // getMovies() {
     //   axios.get('titles').then(res => {
     //     console.log('RES ', res);
