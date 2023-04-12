@@ -3,16 +3,24 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'MovieCard'
+    name: 'MovieCard',
+    props:{
+        title: {
+            type: String,
+        },
+        image: {
+            type: String,
+        },
+    },
 })
 
 </script>
 
 <template>
     <v-card class="mx-auto" max-width="344">
-        <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px" cover></v-img>
+        <v-img :src=image height="200px" cover></v-img>
         <v-card-title>
-            Movie Title
+            {{ title }}
         </v-card-title>
         <v-card-actions>
             <v-btn color="orange">
