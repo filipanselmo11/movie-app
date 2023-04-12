@@ -30,7 +30,7 @@ export default defineComponent({
   },
 
   created() {
-    this.getMovies
+    this.getMovies()
   },
 
   data() {
@@ -40,7 +40,11 @@ export default defineComponent({
   },
   methods: {
     getMovies() {
-      console.log('Movies')
+      axios.get('titles').then(res => {
+        console.log('RES ', res);
+      }).catch(error => {
+        console.log('ERROR ', error);
+      })
     }
   },
 })
