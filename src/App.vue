@@ -1,8 +1,12 @@
 <template>
   <v-app>
     <v-main>
-      <MovieAppBar/>
-      <MovieInput/>
+      <MovieAppBar />
+      <MovieInput />
+      <br />
+      <MovieCard />
+      <br />
+      <MovieDialog />
     </v-main>
   </v-app>
 </template>
@@ -11,18 +15,32 @@
 import { defineComponent } from 'vue'
 import MovieAppBar from './components/MovieAppBar.vue';
 import MovieInput from './components/MovieInput.vue';
+import MovieCard from './components/MovieCard.vue';
+import MovieDialog from './components/MovieDialog.vue';
+import axios from 'axios';
 
 export default defineComponent({
   name: 'App',
 
   components: {
     MovieAppBar,
-    MovieInput
-},
+    MovieInput,
+    MovieCard,
+    MovieDialog
+  },
 
-  data () {
+  created() {
+    this.getMovies
+  },
+
+  data() {
     return {
       //
+    }
+  },
+  methods: {
+    getMovies() {
+      console.log('Movies')
     }
   },
 })
