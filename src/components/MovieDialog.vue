@@ -4,6 +4,14 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
     name: 'MovieDialog',
+    props:{
+        title: {
+            type: String,
+        },
+        sinopse: {
+            type: String,
+        },
+    },
     data() {
         return {
             dialog: false,
@@ -23,7 +31,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="text-center">
+    <div>
         <v-btn color="orange" @click="openDialog">
             Explore
         </v-btn>
@@ -33,10 +41,10 @@ export default defineComponent({
                     <v-expansion-panels>
                         <v-expansion-panel>
                             <v-expansion-panel-title>
-                                O Tigre e o Dragão
+                                {{ title }}
                             </v-expansion-panel-title>
                             <v-expansion-panel-text>
-                                Lorem ipsum seculorum asjdahsjdhadjhadjksa
+                                {{ sinopse }}
                             </v-expansion-panel-text>
                         </v-expansion-panel>
                     </v-expansion-panels>

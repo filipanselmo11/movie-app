@@ -2,11 +2,14 @@
   <v-app>
     <v-main>
       <MovieAppBar />
-      <MovieInput :userInput="userInput" :loading="loading" :loaed="loaded" @searchMovie="searchMovie" />
+      <MovieInput :inputMovie="inputMovie" />
       <br />
       <v-row>
-        <v-col v-for="item in movies" :key="item.id" cols="12" sm="6" md="4">
-          <MovieCard :image="item.image" :title="item.title" />
+        <v-col v-for="item in filteredMovies" :key="item.title" cols="12" sm="6" md="4">
+          <MovieCard
+            :image="item.image"
+            :title="item.title"
+            :sinopse="item.sinopse" />
           <br />
         </v-col>
       </v-row>
@@ -32,14 +35,15 @@ export default defineComponent({
     MovieDialog
   },
 
-  // created() {
-  //   this.getMovies()
-  // },
-
   data() {
     return {
       movies: [
-        { id: 1, title: 'Homem Aranha', image: 'https://c4.wallpaperflare.com/wallpaper/451/794/543/comics-maguire-marvel-movies-wallpaper-preview.jpg' },
+        {
+          id: 1,
+          title: 'Homem Aranha',
+          image: 'https://c4.wallpaperflare.com/wallpaper/451/794/543/comics-maguire-marvel-movies-wallpaper-preview.jpg',
+          sinopse: 'Peter Parker (Tobey Maguire) em uma excursão visita um laboratório de genética a exposição de aranhas de 15 espécies junto com seu amigo Harry Osborn (James Franco) e seu interesse amoroso, Mary Jane Watson (Kirsten Dunst). Lá, Peter é picado por uma aranha geneticamente modificada. Depois de chegar a casa de seu Tio Ben (Cliff Robertson) e sua Tia May (Rosemary Harris), ele acaba inconsciente. Enquanto isso, o pai de Harry, o cientista Norman Osborn (Willem Dafoe), está tentando preservar um contrato militar de importância crucial para sua empresa a Oscorp. Ele testa uma fórmula ampliadora de desempenho em si mesmo, porém, acaba ficando insano e mata seu assistente, Mendel Stromm (Ron Perkins). Na manhã seguinte, Peter descobre que sua visão melhorou, e seu corpo se metamorfoseou em um físico mais musculoso. Na escola, ele descobre que pode produzir teias, e ganha um sentido de aranha, que o salva de ser esmurrado pelo valentão da escola, Flash Thompson (Joe Manganiello), e termina por mandar o mesmo ao chão com um único soco, impressionando seus colegas.'
+        },
         { id: 2, title: 'X Men 2', image: 'https://c4.wallpaperflare.com/wallpaper/758/370/397/movies-x-men-2-wolverine-magneto-wallpaper-preview.jpg' },
         { id: 3, title: 'Django Livre', image: 'https://c4.wallpaperflare.com/wallpaper/161/142/425/movies-django-unchained-text-wallpaper-preview.jpg' },
         { id: 4, title: 'Ju-On', image: 'https://c4.wallpaperflare.com/wallpaper/111/10/338/bunshinsaba-dark-evil-film-wallpaper-preview.jpg' },
@@ -59,44 +63,21 @@ export default defineComponent({
         { id: 18, title: 'Mortal Kombat (2021)', image: 'https://images5.alphacoders.com/113/1131821.jpg' },
         { id: 19, title: 'O Incrivel Hulk', image: 'https://images8.alphacoders.com/509/509123.png' },
       ],
-      loading: false,
-      loaded: false,
-      userInput: '',
+      inputMovie: '',
     }
   },
-  methods: {
-    searchMovie() {
-      console.log('Buscando Filme');
-      this.loading = true;
-      this.movies.forEach(item => {
-        if (this.userInput === item.title) {
-          this.loading = false;
-          this.loaded = true;
-          console.log('Filme Encontrado');
-        }
-      })
-      // setTimeout(() => {
-      //   this.loading = false;
-      //   this.loaded = true;
-      //   this.movies.forEach(item => {
-      //     if (item.title === this.userInput) {
-      //       console.log('Filme Encontrado')
-      //     }
-      //   })
-      // }, 5000);
+  computed: {
+    filteredMovies() {
+      let tempMovies = this.movies;
+      if (this.inputMovie != '' && this.inputMovie) {
+        tempMovies = tempMovies.filter((item) => {
+          return item.title
+            .toUpperCase()
+            .includes(this.inputMovie.toUpperCase())
+        })
+      }
+      return tempMovies;
     }
-    // getMovies() {
-    //   this.movies.forEach(item => {
-    //     console.log(item)
-    //   })
-    // }
-    // getMovies() {
-    //   axios.get('titles').then(res => {
-    //     console.log('RES ', res);
-    //   }).catch(error => {
-    //     console.log('ERROR ', error);
-    //   })
-    // }
   },
 })
 </script>
