@@ -16,9 +16,7 @@ export default defineComponent({
     },
     watch:{
         inputMovie(val) {
-            if(val) {
-                this.inputMovieLocal = val
-            }
+            this.inputMovieLocal = val
         }
     },
 })
